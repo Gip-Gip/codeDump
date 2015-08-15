@@ -13,17 +13,17 @@
 char * getExtension(char *__fn__)
 {
 	int __cl__ = 0;
-	while(*(__fn__-__cl__) != '.')
+	while(*(__fn__+__cl__) != '.')
 	{
 		__cl__ ++;
 	}
 	char __ex__[__cl__+1]; /* We have to make it 1 byte bigger so we can
 	* place the null terminator at the end */
 	int __co__ = 0;
-	while(__cl__)
+	while(*(__fn__+__cl__))
 	{
-		__ex__[__co__] = *(__fn__-__cl__);
-		__cl__ --;
+		__ex__[__co__] = *(__fn__+__cl__);
+		__cl__ ++;
 		__co__ ++;
 	}
 	__ex__[__co__] = 0;
