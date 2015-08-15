@@ -1,31 +1,50 @@
-/* consutil.c, a C file with a bunch of funtions to aid console app development
- * under The Unlicense. See LICENSE.TXT for details
- */
+/* consutil.c, a C file with a bunch of functions to aid console app development
+consutil.c is under The Unlicense. See LICENSE.TXT for details
+*/
 
-/* getExtension: Get the filename's extension and return the pointer to it.
- * VARIABLES:
- * __fn__ = the filename
- * __cl__ = the counter used to find the filename's length
- * __ex__ = the array that at the end, holds the filename's extension
- * __co__ = the counter that helps get the characters into the array __ex__
- */
+/* getStingLength, a alternative to strlen. It finds the length of a string
 
-char * getExtension(char *__fn__)
+VARIABLES:
+----------
+
+___st___
+the pointer to the string being measured.
+
+___tm___
+the terminator that ends the string. Usually NULL.
+
+___cn___
+the counter that measures the string.
+*/
+int getStringLength(const char *___st___, char ___tm___)
 {
-	int __cl__ = 0;
-	while(*(__fn__+__cl__) != '.')
+	int ___cn___ = 0;
+	while(*(___st___+___cn___) != ___tm___)
 	{
-		__cl__ ++;
+		___cn___ ++;
 	}
-	char __ex__[__cl__+1]; /* We have to make it 1 byte bigger so we can
-	* place the null terminator at the end */
-	int __co__ = 0;
-	while(*(__fn__+__cl__))
+	return ___cn___;
+}
+
+/* getExtension, a function that returns a pointer to the extension in the given
+file name
+
+VARIABLES:
+----------
+__fn__
+The pointer to the file name
+
+__cn__
+the counter used to find the extension
+*/
+
+const char * getExtension(const char *__fn__)
+{
+	int __cn__ = getStringLength(__fn__, 0);
+	while(*(__fn__+__cn__) != '.' && __cn__)
 	{
-		__ex__[__co__] = *(__fn__+__cl__);
-		__cl__ ++;
-		__co__ ++;
+		__cn__ --;
 	}
-	__ex__[__co__] = 0;
-	return __ex__;
+	__fn__ += __cn__;
+	return __fn__;
 }
