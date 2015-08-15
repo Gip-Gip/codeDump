@@ -2,6 +2,10 @@
 consutil.c is under The Unlicense. See LICENSE.TXT for details
 */
 
+#ifndef _INC_STDLIB
+#include <stdlib.h>
+#endif
+
 /* getStingLength, a alternative to strlen. It finds the length of a string
 
 VARIABLES:
@@ -26,6 +30,42 @@ int getStringLength(const char *___st___, char ___tm___)
 	return ___cn___;
 }
 
+/* checkForChar, a function that checks if there is a specific character in a
+string before the terminator.
+
+VARIABLES:
+____st____
+the string we're searching in.
+
+___lk___
+the character we're looking for
+
+____tm____
+the terminator. Usually null
+
+____cn____
+the counter used to find the character
+
+____tr____
+used to keep track of whether the character has been fount or not
+*/
+
+int checkForChar(const char *____st____, char ___lk___, char ____tm____)
+{
+	int ____cn____ = 0;
+	int ____tr____ = 0;
+	while(*(____st____ + ____cn____) != ____tm____ && \
+	*(____st____ + ____cn____) != ___lk___)
+	{
+		____cn____ ++;
+		if(*(____st____ + ____cn____) == ___lk___)
+		{
+			____tr____ = 1;
+		}
+	}
+	return ____tr____;
+}
+
 /* getExtension, a function that returns a pointer to the extension in the given
 file name
 
@@ -47,4 +87,48 @@ const char * getExtension(const char *__fn__)
 	}
 	__fn__ += __cn__;
 	return __fn__;
+}
+
+/* setExtension, a function that changes the extension of a filename
+___fn___
+the filename to change/add the extension of/to
+
+__ex__
+the new extention
+
+__es__
+the length of the new extension
+
+__fs__
+the length of the filename without the extension
+__nl__
+the length of the filename with the new extension
+
+__nf__
+the string containing the new extension
+
+__cn__
+the primary counter
+*/
+
+const char * setExtension(const char *___fn___, const char *__ex__)
+{
+	int __es__ = getStringLength(__ex__, 0);
+	int __fs__ = getStringLength(___fn___, 0);
+	if(checkForChar(___fn___, '.', 0))
+		__fs__ = getStringLength(___fn___, '.');
+	int __nl__ = __fs__+__es__;
+	char *__nf__ = malloc(__nl__+1);
+	int __cn__ = 0;
+	while(__cn__ != __fs__)
+	{
+		*(__nf__+__cn__) = *(___fn___+__cn__);
+		__cn__ ++;
+	}
+	while(__cn__ != __fs__+__es__)
+	{
+		*(__nf__+__cn__) = *(__ex__+__cn__-__fs__);
+		__cn__ ++;
+	}
+	return __nf__;
 }
