@@ -13,7 +13,7 @@ consutil.c is under The Unlicense. See LICENSE.TXT for details
 #define false 0
 #endif
 #ifndef true
-#define true
+#define true 1
 #endif
 
 /* getStingLength, a alternative to strlen. It finds the length of a string
