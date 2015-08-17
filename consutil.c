@@ -6,6 +6,16 @@ consutil.c is under The Unlicense. See LICENSE.TXT for details
 #include <stdlib.h>
 #endif
 
+#ifndef bool
+#define bool char
+#endif
+#ifndef false
+#define false 0
+#endif
+#ifndef true
+#define true
+#endif
+
 /* getStingLength, a alternative to strlen. It finds the length of a string
 
 VARIABLES:
@@ -96,6 +106,10 @@ the filename to change/add the extension of/to
 __ex__
 the new extention
 
+__ap__
+the append flag. If it equals false, setExtension replaces the extension instead of
+adding it.
+
 __es__
 the length of the new extension
 
@@ -111,11 +125,11 @@ __cn__
 the primary counter
 */
 
-const char * setExtension(const char *___fn___, const char *__ex__)
+const char * setExtension(const char *___fn___, const char *__ex__, bool __ap__)
 {
 	int __es__ = getStringLength(__ex__, 0);
 	int __fs__ = getStringLength(___fn___, 0);
-	if(checkForChar(___fn___, '.', 0))
+	if(checkForChar(___fn___, '.', 0) && !__ap__)
 		__fs__ = getStringLength(___fn___, '.');
 	int __nl__ = __fs__+__es__;
 	char *__nf__ = malloc(__nl__+1);
