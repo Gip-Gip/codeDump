@@ -155,7 +155,10 @@ file exists, it will not destroy it unless the user says otherwise.
 
 VARIABLES:
 __fn__
+the pointer to the filename
 
+__yn__
+the variable that is used to tell us whether the user wants the file overwritten or not
 */
 
 FILE safeFileWrite(const char *__fn__)
