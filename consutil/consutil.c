@@ -5,6 +5,9 @@ consutil.c is under The Unlicense. See LICENSE.TXT for details
 #ifndef _INC_STDLIB
 #include <stdlib.h>
 #endif
+#ifndef _INC_STDIO
+#include <stdio.h>
+#endif
 
 #ifndef bool
 #define bool char
@@ -145,4 +148,33 @@ const char * setExtension(const char *___fn___, const char *__ex__, bool __ap__)
 		__cn__ ++;
 	}
 	return __nf__;
+}
+
+/* safeFileWrite, a function that if a file exists, will make sure that if a
+file exists, it will not destroy it unless the user says otherwise.
+
+VARIABLES:
+__fn__
+
+*/
+
+FILE safeFileWrite(const char *__fn__)
+{
+	fopen(__fn__, "r");
+	if(__fn__ != NULL)
+	{
+		#ifndef OVR_WRITE_MSG
+		printf("%s already exists! Overwrite(y/n)?\n", __fn__);
+		#else
+		printf(OVR_WRITE_MSG, __fn__);
+		#endif
+		char *__yn__
+		scanf("%c", &__yn__);
+		if(__yn__ != 'y', __yn__ != 'Y')
+		{
+			printf("Not overwriting.\n");
+			return NULL;
+		}
+	}
+	return fopen(__fn__, "w");
 }
