@@ -1,7 +1,0 @@
-CONCEPT.TXT in under The Unlicense. See LICENSE.TXT for details.
-
-REDD's goals are to make compression of non-compressible data, such as
-executables and compressed files, easier. It does so by making a bit into a
-byte, giving it a chance that the compressor can find a pattern in the bit
-orders, and not the byte orders. This does increase the file size 8 times,as
-REDD does not actually compress files.
