@@ -147,6 +147,7 @@ const char * setExtension(const char *___fn___, const char *__ex__, bool __ap__)
 		*(__nf__+__cn__) = *(__ex__+__cn__-__fs__);
 		__cn__ ++;
 	}
+	*(__nf__+__cn__) = 0;
 	return __nf__;
 }
 
@@ -157,23 +158,27 @@ VARIABLES:
 __fn__
 the pointer to the filename
 
+__ft__
+tells us weather a file exists
+
 __yn__
-the variable that is used to tell us whether the user wants the file overwritten or not
+the variable that is used to tell us whether the user wants the file
+overwritten or not
 */
 
-FILE safeFileWrite(const char *__fn__)
+FILE * safeFileWrite(const char *__fn__)
 {
-	fopen(__fn__, "r");
-	if(__fn__ != NULL)
+	FILE *__ft__ = fopen(__fn__, "r");
+	if(__ft__ != NULL)
 	{
 		#ifndef OVR_WRITE_MSG
 		printf("%s already exists! Overwrite(y/n)?\n", __fn__);
 		#else
 		printf(OVR_WRITE_MSG, __fn__);
 		#endif
-		char *__yn__
+		char __yn__;
 		scanf("%c", &__yn__);
-		if(__yn__ != 'y', __yn__ != 'Y')
+		if(__yn__ != 'y'&& __yn__ != 'Y')
 		{
 			printf("Not overwriting.\n");
 			return NULL;
@@ -181,3 +186,4 @@ FILE safeFileWrite(const char *__fn__)
 	}
 	return fopen(__fn__, "w");
 }
+
