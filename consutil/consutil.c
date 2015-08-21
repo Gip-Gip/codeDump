@@ -19,7 +19,7 @@ consutil.c is under The Unlicense. See LICENSE.TXT for details
 #define true 1
 #endif
 
-/* getStingLength, a alternative to strlen. It finds the length of a string
+/* getStringLength, a alternative to strlen. It finds the length of a string
 
 VARIABLES:
 ----------
