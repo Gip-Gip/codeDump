@@ -18,6 +18,9 @@ consutil.c is under The Unlicense. See LICENSE.TXT for details
 #ifndef true
 #define true 1
 #endif
+#ifndef size_t
+#define size_t long unsigned int
+#endif
 
 /* getStringLength, an alternative to strlen. It finds the length of a string
 
@@ -33,7 +36,7 @@ the terminator that ends the string. Usually NULL.
 ___cn___
 the counter that measures the string.
 */
-int getStringLength(const char *___st___, char ___tm___)
+size_t getStringLength(const char *___st___, char ___tm___)
 {
 	int ___cn___ = 0;
 	while(*(___st___+___cn___) != ___tm___)
@@ -63,10 +66,10 @@ ____tr____
 used to keep track of whether the character has been fount or not
 */
 
-int checkForChar(const char *____st____, char ___lk___, char ____tm____)
+bool checkForChar(char *____st____, char ___lk___, char ____tm____)
 {
-	int ____cn____ = 0;
-	int ____tr____ = 0;
+	size_t ____cn____ = 0;
+	bool ____tr____ = 0;
 	while(*(____st____ + ____cn____) != ____tm____ && \
 	*(____st____ + ____cn____) != ___lk___)
 	{
@@ -91,7 +94,7 @@ __cn__
 the counter used to find the extension
 */
 
-const char * getExtension(const char *__fn__)
+char * getExtension(char *__fn__)
 {
 	int __cn__ = getStringLength(__fn__, 0);
 	while(*(__fn__+__cn__) != '.' && __cn__)
@@ -128,7 +131,7 @@ __cn__
 the primary counter
 */
 
-const char * setExtension(const char *___fn___, const char *__ex__, bool __ap__)
+char * setExtension(char *___fn___, char *__ex__, bool __ap__)
 {
 	int __es__ = getStringLength(__ex__, 0);
 	int __fs__ = getStringLength(___fn___, 0);
@@ -166,7 +169,7 @@ the variable that is used to tell us whether the user wants the file
 overwritten or not
 */
 
-FILE * safeFileWrite(const char *__fn__)
+FILE * safeFileWrite(char *__fn__)
 {
 	FILE *__ft__ = fopen(__fn__, "r");
 	if(__ft__ != NULL)
