@@ -38,7 +38,7 @@ the counter that measures the string.
 */
 size_t getStringLength(const char *___st___, char ___tm___)
 {
-	int ___cn___ = 0;
+	size_t ___cn___ = 0;
 	while(*(___st___+___cn___) != ___tm___)
 	{
 		___cn___ ++;
@@ -96,7 +96,7 @@ the counter used to find the extension
 
 char * getExtension(char *__fn__)
 {
-	int __cn__ = getStringLength(__fn__, 0);
+	size_t __cn__ = getStringLength(__fn__, 0);
 	while(*(__fn__+__cn__) != '.' && __cn__)
 	{
 		__cn__ --;
@@ -133,12 +133,12 @@ the primary counter
 
 char * setExtension(char *___fn___, char *__ex__, bool __ap__)
 {
-	int __es__ = getStringLength(__ex__, 0);
-	int __fs__ = getStringLength(___fn___, 0);
+	size_t __es__ = getStringLength(__ex__, 0);
+	size_t __fs__ = getStringLength(___fn___, 0);
 	if(checkForChar(___fn___, '.', 0) && !__ap__)
 		__fs__ = getStringLength(___fn___, '.');
-	int __nl__ = __fs__+__es__;
-	char *__nf__ = malloc(__nl__+1);
+	size_t __nl__ = __fs__+__es__;
+	size_t *__nf__ = malloc(__nl__+1);
 	int __cn__ = 0;
 	while(__cn__ != __fs__)
 	{
@@ -187,6 +187,7 @@ FILE * safeFileWrite(char *__fn__)
 			return NULL;
 		}
 	}
+	if(fclose(__ft__)) return 0;
 	return fopen(__fn__, "w");
 }
 
