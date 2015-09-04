@@ -187,7 +187,7 @@ FILE * safeFileWrite(char *__fn__)
 			return NULL;
 		}
 	}
-	if(fclose(__ft__)) return 0;
+	if(fclose(__ft__)) return NULL;
 	return fopen(__fn__, "w");
 }
 
