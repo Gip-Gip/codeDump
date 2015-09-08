@@ -106,6 +106,9 @@ char * getExtension(char *__fn__)
 }
 
 /* setExtension, a function that changes the extension of a filename
+
+VARIABLES:
+-----------
 ___fn___
 the filename to change/add the extension of/to
 
@@ -190,4 +193,28 @@ FILE * safeFileWrite(char *__fn__)
 	if(fclose(__ft__)) return NULL;
 	return fopen(__fn__, "w");
 }
+/*
+nullify, a function that makes all the bytes in a string 0.
 
+VARIABLES:
+-----------
+
+__st__
+the string being nullified
+
+__sz__
+the size of the string
+
+__cn__
+the counter
+*/
+
+void nullify(char *__st__, size_t __sz__)
+{
+	size_t __cn__ = 0;
+	while(__cn__ != __sz__)
+	{
+		*(__st__ + __cn__) = NULL;
+		__cn__ ++;
+	}
+}
