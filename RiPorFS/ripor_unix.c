@@ -1,6 +1,18 @@
 /* RiPorFS Utilities!
 
 ripor_unix.c is under The Unlicense. See LICENSE.TXT for details
+
+These utilities are used to provide I/O between the user and RiPorFS formatted disk
+images.
+
+The Ridged Portable File System (RiPorFS) is a file system designed to be a FAT
+replacement, as a portable, slow, and simple file system that, opposed to FAT, is not
+limited in size. RiPorFS is based on ridges, bytes that tell the reading software
+what's what.
+
+255 = file name
+254 = end of file system
+253 >= file data(in clusters size determined by ridge value)
 */
 
 #include <stdio.h>
