@@ -1,14 +1,12 @@
 /* RiPorFS Utilities!
-
-ripor_unix.c is under The Unlicense. See LICENSE.TXT for details
-
-These utilities are used to provide I/O between the user and RiPorFS formatted disk
-images.
+ripor.c is under The Unlicense. See LICENSE.TXT for details
+These utilities are used to provide I/O between the user and RiPorFS formatted
+disk images.
 
 The Ridged Portable File System (RiPorFS) is a file system designed to be a FAT
-replacement, as a portable, slow, and simple file system that, opposed to FAT, is not
-limited in size. RiPorFS is based on ridges, bytes that tell the reading software
-what's what.
+replacement, as a portable, slow, and simple file system that, opposed to FAT,
+is not limited in size. RiPorFS is based on ridges, bytes that tell the reading
+software what's what.
 
 255 = file name
 254 = end of file system
@@ -33,6 +31,8 @@ what's what.
 
 #define INFO_CREATE "Info: Creating %s from %s!\n"
 #define INFO_ADD "Info: Adding %s to %s!\n"
+#define INFO_FILE "Info: %s has been found!\n"
+#define INFO_SIZE "Info: The file's size is %ld bytes long\n"
 #define INFO_DONE "Info: Done!\n"
 
 #define MAGIC_NUM 253
@@ -80,16 +80,16 @@ MAINTYPE main(int argc, char *argv[])
 	printf(START_MSG);
 	if(argc == 4 && *(argv[1]) == 'a')
 	{
-		in = fopen(argv[2], "r");
+		in = fopen(argv[2], "rb");
 		if(in == NULL)
 		{
 			printf(ERROR_NOFILE);
 			return noFile;
 		}
-		out = fopen(argv[3], "r+");
+		out = fopen(argv[3], "rb+");
 		if(out == NULL)
 		{
-			out = fopen(argv[3], "w+");
+			out = fopen(argv[3], "wb+");
 			fseek(out, 0, SEEK_SET);
 			fwrite("RiPorFS", 1, 7, out);
 			fseek(out, 0, SEEK_SET);
@@ -168,7 +168,7 @@ MAINTYPE main(int argc, char *argv[])
 	}
 	else if(argc == 3 && *(argv[1]) == 'v')
 	{
-		in = fopen(argv[2], "r");
+		in = fopen(argv[2], "rb");
 		if(in == NULL)
 		{
 			printf(ERROR_NOFILE);
@@ -192,17 +192,28 @@ MAINTYPE main(int argc, char *argv[])
 			}
 			if(ridge == fileNameMark)
 			{
+				if(fileSize)
+				{
+					printf(INFO_SIZE, fileSize);
+					fileSize = 0;
+				}
 				if(freadTillNull(in, fileName))
 				{
 					printf(ERROR_AB_FREAD);
 					return abFread;
 				}
-				printf("%s\n",  fileName);
+				printf(INFO_FILE,  fileName);
 			}
 			else if(ridge != endOfFS)
 			{
+				fileSize += ridge;
 				fseek(in, ridge, SEEK_CUR);
 			}
+		}
+		if(fileSize)
+		{
+				printf(INFO_SIZE, fileSize);
+			fileSize = 0;
 		}
 		printf(INFO_DONE);
 		fclose(in);
