@@ -9,5 +9,6 @@ CURRENT PROJECTS:
 consutil.c -
 a C file containing funtions to aid the development of console apps.
 
-redd -
-a utility made to make compression of incompressible data easier.
+RiPorFS -
+the Ridged Portable File System (RiPorFS) is a simple file system made to be a
+FAT replacement.
